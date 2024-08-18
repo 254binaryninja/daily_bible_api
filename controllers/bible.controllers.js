@@ -1,10 +1,10 @@
-
+const {chatResponse} = require('../actions/generation.js')
 
 const getResponse = async(req,res) =>{
   try {
     const input = req.body;
-    // const response = chatResponse(input)
-    // res.status(200).send(response)
+    const response = chatResponse(input)
+    res.status(200).send(response)
   } catch (error) {
     console.log(error)
   }
