@@ -1,9 +1,9 @@
 import express from 'express'
+import { getResponse,getContent } from '../controllers/bible.controllers.js';
 
 const router = express.Router();
 
-router.get('/',(req,res)=>{
-    res.status(200).send("Hello from Daily bible API")
-})
+router.get('/',getResponse)
+router.get('/daily-content/',getContent)
 
 export default router

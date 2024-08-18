@@ -8,7 +8,9 @@ const app = express();
 //routes
 app.use('/api/daily-bible',router)
 app.use('/api/daily-bible/spotify',spotifyRoute)
-
+//middleware
+app.use(express.json())
+app.use(express.urlencoded({extended:false}))
 
 app.listen(port,()=>{
     console.log(`Daily Bible listening on ${port}...`)

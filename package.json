@@ -1,17 +1,18 @@
 {
   "name": "daily-bible",
   "version": "1.0.0",
-  "type": "module",
-  "description": "This is an express API which is going to serve as the backend to the ReactNative app (Daily Bible) it's going  to provide the ability to have a bible based chat with the mistral LLM by providing responses that are bible verse guided.",
+  "description": "This is an express API which is going to serve as the backend to the ReactNative app (Daily Bible) it's going  to provide the ability to have a bible based chat with an LLM by providing responses that are bible verse guided.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"nodemon index"
+    "start": "nodemon index"
   },
   "author": "Arnold Musandu",
   "license": "ISC",
   "dependencies": {
-    "@mistralai/mistralai": "^1.0.2",
+    "@google/generative-ai": "^0.17.0",
+    "@supabase/supabase-js": "^2.45.1",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "langchain": "^0.2.16",
     "nodemon": "^3.1.4"
