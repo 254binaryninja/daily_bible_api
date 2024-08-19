@@ -72,4 +72,32 @@ async function chatResponse (userInput) {
     return text;
 }
 
-module.exports = {chatResponse}
+
+
+
+//Generate Daily curated content for the user
+async function curatedContentResponse(dailycontent,content) {
+    try {
+        
+  const model = genAI.getGenerativeModel({ model: 'text-bison-001' });
+
+  const prompt = `Provide an advice to the user based on this topic "${dailycontent}" using on the following context "${content}"`;
+  const result = await model.generateContentStream(prompt)
+  const response = await result.response
+
+  return response.text();
+    } catch (error) {
+       console.log(error) 
+    }
+  
+}
+
+async function curatedResponse (dailycontent) {
+    const data = await embedInput(dailycontent)
+    const text = await queryBible(data)
+    const response = await curatedContentResponse(dailycontent,text)
+
+    return response
+}
+
+module.exports = {chatResponse,curatedResponse}

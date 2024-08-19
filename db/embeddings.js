@@ -77,6 +77,7 @@ async function saveToSupabase(embeddingData) {
 
    
     await saveToSupabase(embeddingData);
+    console.log("Embeddings saved to supabase")
   } catch (error) {
     console.error('Error creating embeddings:', error);
   }
