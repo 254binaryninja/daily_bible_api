@@ -12,7 +12,7 @@ const supabaseClient = createClient(
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-console.log(genAI)
+
 // Read the file and split it into chunks
 async function splitDocument(path) {
   try {
@@ -34,7 +34,7 @@ async function splitDocument(path) {
         return textArr;
     }
   } catch (error) {
-    console.error('Error splitting document:', error);
+    console.error(`Error splitting document ${path} `, error);
     throw error; // Re-throw the error to handle it at a higher level
   }
 }
@@ -43,7 +43,7 @@ async function splitDocument(path) {
 async function saveToSupabase(embeddingData) {
   try {
     console.log('Saving embeddings to Supabase...');
-    const { error } = await supabaseClient.from('daily_bible').insert(embeddingData);
+    const { error } = await supabaseClient.from('daily_biblev1').insert(embeddingData);
 
     if (error) {
       console.error('Error saving to Supabase:', error);
@@ -70,14 +70,13 @@ async function saveToSupabase(embeddingData) {
     for(const chunk of text) {
         console.log("creating embedding for chunk ",chunk)
         const result = await model.embedContent([chunk])
-        embeddingData.push({content:chunk,embedding:result.embedding[0]})
+        embeddingData.push({content:chunk,embedding:result.embedding.values})
     }
     
    console.log(embeddingData)
 
    
     await saveToSupabase(embeddingData);
-    console.log("Embeddings saved to supabase")
   } catch (error) {
     console.error('Error creating embeddings:', error);
   }

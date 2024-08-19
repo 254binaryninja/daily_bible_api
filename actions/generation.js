@@ -18,10 +18,10 @@ async function embedInput(userInput) {
     try {
         
     const model = genAI.getGenerativeModel({ model: "text-embedding-004" });
-    const response = await model.embedContent([userInput])
+    const response = await model.embedContent(userInput)
 
-    const embedding = response.embedding;
-
+    const embedding = response.embedding.values;
+    console.log("from embeddings",embedding)
     return embedding;
     } catch (error) {
         console.log(error)
@@ -33,15 +33,23 @@ async function embedInput(userInput) {
 
 async function queryBible (embedding) {
     try {
-        const {data} = await supabaseClient.rpc('match_handbook_docs',{
+        const { data,error } = await supabaseClient.rpc('match_handbook_docs',{
             query_embedding:embedding,
-            match_threshold:0.78,
-            match_count:5
+            match_threshold:0.50,
+            match_count:2
         })
 
-        return data.map((chunk)=>chunk.content).join(" ")
-    } catch (error) {
+        if(error){
+            console.log("Error from RPC METHOD",error)
+        }
+
+        const response = data.map((chunk)=>chunk.content)
+        console.log("from rpc method",response)
+        return response
         
+       
+    } catch (error) {
+        console.log(error)
     }
 }
 
@@ -49,9 +57,9 @@ async function queryBible (embedding) {
 async function generateResponse(userInput,context) {
     try {
         
-  const model = genAI.getGenerativeModel({ model: 'text-bison-001' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-  const prompt = `Provide a comprehensive response to the user query "${userInput}" using on the following context "${context}"`;
+  const prompt = `Provide advice as a pastor  to the user query "${userInput}" using on the following context "${context}"`;
   const result = await model.generateContentStream(prompt)
   const response = await result.response
 
@@ -79,9 +87,9 @@ async function chatResponse (userInput) {
 async function curatedContentResponse(dailycontent,content) {
     try {
         
-  const model = genAI.getGenerativeModel({ model: 'text-bison-001' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-  const prompt = `Provide an advice to the user based on this topic "${dailycontent}" using on the following context "${content}"`;
+  const prompt = `Provide advice to the user  based on this topic "${dailycontent}" using on the following context "${content}"`;
   const result = await model.generateContentStream(prompt)
   const response = await result.response
 
