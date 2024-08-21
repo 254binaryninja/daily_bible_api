@@ -2,8 +2,10 @@ const {chatResponse,curatedResponse} = require('../actions/generation.js')
 
 const getResponse = async(req,res) =>{
   try {
-    const input = req.body;
-    const response = chatResponse(input)
+    // const body = req.body;
+    const input = req.body.input;
+    console.log(input)
+    const response = await chatResponse(input)
     res.status(200).send(response)
   } catch (error) {
     console.log(error);
@@ -14,8 +16,8 @@ const getResponse = async(req,res) =>{
 //Get daily curated content
 const getContent = async(req,res)=>{
   try {
-    const input = req.body;
-    const response = curatedResponse(input)
+    const input = req.body.input;
+    const response = await curatedResponse(input)
     res.status(200).send(response)
   } catch (error) {
     console.log(error);
@@ -23,4 +25,4 @@ const getContent = async(req,res)=>{
   }
 }
 
-export {getResponse,getContent}
+module.exports = { getResponse,getContent}

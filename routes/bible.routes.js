@@ -1,9 +1,11 @@
-import express from 'express'
-import { getResponse,getContent } from '../controllers/bible.controllers.js';
+const express = require('express')
+const { getResponse,getContent } = require('../controllers/bible.controllers.js');
+//const {chatResponse,curatedResponse} = require('../actions/generation.js')
 
 const router = express.Router();
 
 router.post('/',getResponse)
 router.post('/daily-content/',getContent)
 
-export default router
+
+ module.exports = router

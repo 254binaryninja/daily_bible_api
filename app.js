@@ -3,15 +3,15 @@
 const {createEmbeddings} = require('./db/embeddings.js')
 const {chatResponse,curatedResponse} = require('./actions/generation.js')
 
-// const embed = async(path)=>{
-//     createEmbeddings(path)
-// }
-
-// embed('./Luke.txt')
-
-const response = async(input) =>{
-    const text = await chatResponse(input)
-    console.log(text)
+const embed = async(path)=>{
+    createEmbeddings(path)
 }
 
-response('Should I be baptized ?')
+embed('./Psalms.txt')
+
+// const response = async(input) =>{
+//     const text = await curatedResponse(input)
+//     console.log(text)
+// }
+
+// response('sin')

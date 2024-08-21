@@ -89,7 +89,7 @@ async function curatedContentResponse(dailycontent,content) {
         
   const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-  const prompt = `Provide advice to the user  based on this topic "${dailycontent}" using on the following context "${content}"`;
+  const prompt = `You are a pastor  you are supposed to give the user a sermon the size of a  paragraph based on this input :  "${dailycontent}" using on the following context "${content}"`;
   const result = await model.generateContentStream(prompt)
   const response = await result.response
 
